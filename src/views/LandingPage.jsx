@@ -38,6 +38,18 @@ class LandingPage extends Component {
   }
 
   /**
+   * @method pronounceWord
+   * @description The function that pronounces words
+   * @param {object} word - word
+   * @returns {undefined}
+   */
+  pronounceWord = word => {
+    new Audio(
+      `https://gentle-falls-68008.herokuapp.com/api/v1/names/${word}`
+    ).play();
+  };
+
+  /**
    * @method handleChange
    * @description The function that handles input change
    * @param {object} e - event object
@@ -143,6 +155,15 @@ class LandingPage extends Component {
                       {answer.marked}
                       <span>{answer.pos}</span>
                     </h2>
+                    <div className="pronounciation-div d-flex align-items-center">
+                      Pronunciation:
+                      <button
+                        type="button"
+                        onClick={() => this.pronounceWord(answer.marked)}
+                      >
+                        <i className="fas fa-volume-up" />
+                      </button>
+                    </div>
                     <div>
                       <h4>Meaning</h4>
                       <p>{answer.meaning}</p>

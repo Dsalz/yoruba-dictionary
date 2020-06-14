@@ -13,15 +13,13 @@ const Footer = () => {
         <div className="footer-socials d-flex">
           <button
             type="button"
-            onClick={() => window.open("https://twitter.com/Dsalz")}
+            onClick={() => window.open("https://twitter.com/YorubaNames")}
           >
             <i className="fab fa-twitter" />
           </button>
           <button
             type="button"
-            onClick={() =>
-              window.open("https://www.facebook.com/damola.salisu")
-            }
+            onClick={() => window.open("https://facebook.com/YorubaNames")}
           >
             <i className="fab fa-facebook-f" />
           </button>

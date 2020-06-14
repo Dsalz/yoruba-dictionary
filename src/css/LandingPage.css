@@ -74,7 +74,7 @@
   box-shadow: 0 0.625rem 2.5rem 0 rgba(198, 203, 222, 0.45);
   background: #fff;
   margin: 0 0 10px;
-  padding: 10px;
+  padding: 20px;
   text-align: left;
 }
 
@@ -90,4 +90,26 @@
 .landing-page-answers article div h4,
 .landing-page-answers article div p{
   margin: 5px 0;
+  text-transform: capitalize;
+}
+
+.landing-page-answers article button {
+  background: transparent;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  margin-left: 5px;
+}
+
+.landing-page-answers article div.pronounciation-div {
+  margin: 10px 0 20px;
+}
+
+.landing-page-answers article button i {
+  font-size: 24px;
+}
+
+.landing-page-answers article button:hover i {
+  color: #0066f5
 }

@@ -2,13 +2,13 @@
   justify-content: space-between;
   color: #fff;
   position: relative;
-  padding: 20px 20vw;
   background: #0066f5;
+  padding: 20px 0;
 }
 
 .footer-section {
-  width: 280px;
-  margin-bottom: 10px;
+  margin: 0 auto 10px;
+  width: 90vw;
 }
 
 .footer-section h5 {
@@ -62,4 +62,11 @@
 .footer-copyright {
   width: 100%;
   margin-top: 50px;
+}
+
+@media screen and (max-width: 700px) {
+  .footer-section {
+    margin: 0 auto 10px;
+    width: 90vw;
+  }
 }
