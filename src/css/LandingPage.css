@@ -1,0 +1,93 @@
+.landing-page-hero {
+  height: 500px;
+  /* background: url('https://s.abcnews.com/images/Entertainment/HT_body_paint_01_as_160426_16x9_992.jpg') no-repeat center center; */
+  /* background-size: cover; */
+  margin-top: 75px;
+}
+
+.landing-page-info,
+.landing-page-answers {
+  width: 500px;
+  max-width: 90vw;
+  color: #4a4a4a;
+}
+
+.landing-page-info h1 {
+  font-size: 40px;
+  margin-top: 0;
+}
+
+.landing-page-info form {
+  position: relative;
+}
+
+.landing-page-info input {
+  display: block;
+  width: 100%;
+  border: none;
+  color: #4a4a4a;
+  border-bottom: 2px solid #4a4a4a;
+  padding: 10px 40px 10px 10px;
+  outline: none;
+  box-sizing: border-box;
+  font-size: 16px;
+  background: transparent;
+}
+
+.landing-page-info input:focus {
+  border-color:#0066f5;
+}
+
+.landing-page-info button {
+  padding: 0;
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  outline: none;
+}
+
+.landing-page-info button svg {
+  height: 25px;
+  width: 25px;
+}
+
+.landing-page-info button svg path{
+  fill: #4a4a4a;
+}
+
+.landing-page-info button:hover svg path {
+  fill: #0066f5;
+}
+
+.landing-page-answers {
+  margin: 0 auto 50px;
+  position: relative;
+  top: -80px;
+  text-align: center;
+  color: #4a4a4a;
+}
+
+.landing-page-answers article {
+  box-shadow: 0 0.625rem 2.5rem 0 rgba(198, 203, 222, 0.45);
+  background: #fff;
+  margin: 0 0 10px;
+  padding: 10px;
+  text-align: left;
+}
+
+.landing-page-answers article span{
+  background: #0066f5;
+  color: #fff;
+  font-size: 12px;
+  padding: 5px;
+  border-radius: 5px;
+  margin-left: 10px;
+}
+
+.landing-page-answers article div h4,
+.landing-page-answers article div p{
+  margin: 5px 0;
+}
