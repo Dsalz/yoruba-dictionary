@@ -57,7 +57,7 @@ class LandingPage extends Component {
    */
   search = async searchParam => {
     const { query: stateQuery } = this.state;
-    const query = stateQuery || searchParam;
+    const query = (stateQuery || searchParam).toLowerCase();
     this.setState({
       loading: true,
       formSubmitted: true
