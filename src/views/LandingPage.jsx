@@ -188,34 +188,42 @@ class LandingPage extends Component {
                         </button>
                       </div>
                       <div className="answer-section">
-                        <h4>Meaning</h4>
-                        {meaning && !meaning_eng && <p>{meaning}</p>}
+                        {meaning && !meaning_eng && (
+                          <p>
+                            <b>Meaning:</b> {meaning}
+                          </p>
+                        )}
                         {meaning_eng && (
                           <p>
-                            {meaning_eng}
-                            {meaning_yor && (
-                              <Fragment>
-                                <br />
-                                <em className="yoruba-sub">{meaning_yor}</em>
-                              </Fragment>
-                            )}
+                            <Fragment>
+                              <b>Meaning:</b> {meaning_eng}
+                            </Fragment>
+                          </p>
+                        )}
+                        {meaning_yor && meaning_eng && (
+                          <p>
+                            <Fragment>
+                              <b>Ìtumọ̀:</b> {meaning_yor}
+                            </Fragment>
                           </p>
                         )}
                       </div>
-                      {example_eng && (
-                        <div className="answer-section">
-                          <h4>Example</h4>
+                      <div className="answer-section">
+                        {example_eng && (
                           <p>
-                            {example_eng}
-                            {example_yor && (
-                              <Fragment>
-                                <br />
-                                <em className="yoruba-sub">{example_yor}</em>
-                              </Fragment>
-                            )}
+                            <Fragment>
+                              <b>Example:</b> {example_eng}
+                            </Fragment>
                           </p>
-                        </div>
-                      )}
+                        )}
+                        {example_yor && example_eng && (
+                          <p>
+                            <Fragment>
+                              <b>Àpẹrẹ:</b> {example_yor}
+                            </Fragment>
+                          </p>
+                        )}
+                      </div>
                     </article>
                   )
                 )}
