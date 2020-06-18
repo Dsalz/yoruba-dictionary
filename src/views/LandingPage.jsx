@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable react/prop-types */
 import React, { Fragment, Component } from "react";
 import { firestore } from "firebase";
@@ -86,10 +87,22 @@ class LandingPage extends Component {
         .get()
     ]);
 
+    const meanings = [];
+    const answers = [];
+
+    response
+      .reduce((acc, currVal) => acc.concat(currVal.docs), [])
+      .forEach(doc => {
+        const data = doc.data();
+        if (meanings.includes(data.meaning)) {
+          return;
+        }
+        answers.push(data);
+        meanings.push(data.meaning);
+      });
+
     this.setState({
-      answers: response
-        .reduce((acc, currVal) => acc.concat(currVal.docs), [])
-        .map(doc => doc.data()),
+      answers,
       loading: false
     });
   };
@@ -149,27 +162,63 @@ class LandingPage extends Component {
               {loading && <Loader />}
               {!loading && answers.length === 0 && "No Matching Results"}
               {!loading &&
-                answers.map(answer => (
-                  <article key={`${answer.marked}-${answer.pos}`}>
-                    <h2 className="d-flex align-items-center">
-                      {answer.marked}
-                      <span>{answer.pos}</span>
-                    </h2>
-                    <div className="pronounciation-div d-flex align-items-center">
-                      Pronunciation:
-                      <button
-                        type="button"
-                        onClick={() => this.pronounceWord(answer.marked)}
-                      >
-                        <i className="fas fa-volume-up" />
-                      </button>
-                    </div>
-                    <div>
-                      <h4>Meaning</h4>
-                      <p>{answer.meaning}</p>
-                    </div>
-                  </article>
-                ))}
+                answers.map(
+                  ({
+                    marked,
+                    unmarked,
+                    pos,
+                    meaning,
+                    example_eng,
+                    example_yor,
+                    meaning_eng,
+                    meaning_yor
+                  }) => (
+                    <article key={`${marked}-${pos}`}>
+                      <h2 className="d-flex align-items-center">
+                        {marked || unmarked}
+                        {pos && <span>{pos}</span>}
+                      </h2>
+                      <div className="pronounciation-div d-flex align-items-center">
+                        Pronunciation:
+                        <button
+                          type="button"
+                          onClick={() => this.pronounceWord(marked)}
+                        >
+                          <i className="fas fa-volume-up" />
+                        </button>
+                      </div>
+                      <div className="answer-section">
+                        <h4>Meaning</h4>
+                        {meaning && !meaning_eng && <p>{meaning}</p>}
+                        {meaning_eng && (
+                          <p>
+                            {meaning_eng}
+                            {meaning_yor && (
+                              <Fragment>
+                                <br />
+                                <em className="yoruba-sub">{meaning_yor}</em>
+                              </Fragment>
+                            )}
+                          </p>
+                        )}
+                      </div>
+                      {example_eng && (
+                        <div className="answer-section">
+                          <h4>Example</h4>
+                          <p>
+                            {example_eng}
+                            {example_yor && (
+                              <Fragment>
+                                <br />
+                                <em className="yoruba-sub">{example_yor}</em>
+                              </Fragment>
+                            )}
+                          </p>
+                        </div>
+                      )}
+                    </article>
+                  )
+                )}
             </section>
           )}
         </main>
