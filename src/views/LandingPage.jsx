@@ -130,9 +130,9 @@ class LandingPage extends Component {
       <Fragment>
         <Navbar solid />
         <main>
-          <section className="landing-page-hero d-flex justify-content-center align-items-center">
+          <section className="page-margin landing-page-hero d-flex justify-content-center align-items-center">
             <div className="landing-page-info">
-              <h1>Welcome to the Yoruba Dictionary</h1>
+              <h1 className="page-header">Welcome to the Yoruba Dictionary</h1>
               <form onSubmit={this.handleSubmit}>
                 <input
                   type="text"
@@ -141,6 +141,7 @@ class LandingPage extends Component {
                   placeholder="Enter word here"
                   onChange={this.handleChange}
                   required
+                  className="underlined-input"
                 />
                 <button type="submit" disabled={loading}>
                   <svg

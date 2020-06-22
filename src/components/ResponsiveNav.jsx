@@ -21,6 +21,7 @@ const ResponsiveNav = ({ toggleResponsiveMenu }) => {
         role="presentation"
       >
         <NavLink to="/">Home</NavLink>
+        <NavLink to="/add">Add Word</NavLink>
         <NavLink to="/about">About Us</NavLink>
         <NavLink to="/contact-us">Contact Us</NavLink>
       </div>

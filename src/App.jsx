@@ -7,6 +7,7 @@ import dotenv from "dotenv";
 
 // Views
 import LandingPage from "./views/LandingPage";
+import AddPage from "./views/AddPage";
 import ComingSoonPage from "./views/ComingSoon";
 
 // Components
@@ -37,6 +38,7 @@ const App = () => {
         <Switch>
           <Route exact path="/about" component={ComingSoonPage} />
           <Route exact path="/contact-us" component={ComingSoonPage} />
+          <Route path="/add" component={AddPage} />
           <Route path="*" component={LandingPage} />
         </Switch>
       </ScrollToTop>

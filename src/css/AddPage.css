@@ -1,0 +1,24 @@
+.add-words-section form,
+.add-words-section form button {
+  margin: 50px auto;
+}
+
+.add-words-section form input,
+.add-words-section form button{
+  display: block;
+  width: 100%;
+}
+
+.add-words-section form{
+  width: 500px;
+  max-width: 90vw;
+  margin-top: 150px;
+}
+
+.add-words-section form input{
+  margin-bottom: 20px;
+}
+
+.add-words-section form button{
+  font-size: 18px;
+}

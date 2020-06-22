@@ -52,6 +52,9 @@ const Navbar = () => {
         </div>
 
         <div className="index-navbar-links">
+          <NavLink to="/add" id="retailerlink">
+            Add Word
+          </NavLink>
           <NavLink to="/about" id="retailerlink">
             About
           </NavLink>

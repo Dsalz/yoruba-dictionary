@@ -24,3 +24,58 @@ main {
   padding: 200px 0;
   text-align: center;
 }
+
+.underlined-input,
+.blue-btn,
+.alert {
+  border: none;
+  outline: none;
+  font-size: 16px;
+}
+
+.underlined-input {
+  color: #4a4a4a;
+  border-bottom: 2px solid #4a4a4a;
+  padding: 10px;
+  box-sizing: border-box;
+  background: transparent;
+}
+
+.underlinedInput:focus {
+  border-color:#0066f5;
+}
+
+.blue-btn {
+  background: #0066f5;
+  cursor: pointer;
+}
+
+.alert {
+  display: block;
+  margin: 10px auto;
+  text-align: center;
+}
+
+.blue-btn,
+.alert  {
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.alert-success {
+  background: #68bd68;
+}
+
+.alert-error {
+  background: red;
+}
+
+.page-margin {
+  margin-top: 75px;
+}
+
+.page-header {
+  font-size: 40px;
+  color: #4a4a4a;
+}

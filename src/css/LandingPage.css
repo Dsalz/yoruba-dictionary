@@ -2,7 +2,6 @@
   height: 500px;
   /* background: url('https://s.abcnews.com/images/Entertainment/HT_body_paint_01_as_160426_16x9_992.jpg') no-repeat center center; */
   /* background-size: cover; */
-  margin-top: 75px;
 }
 
 .landing-page-info,
@@ -13,7 +12,6 @@
 }
 
 .landing-page-info h1 {
-  font-size: 40px;
   margin-top: 0;
 }
 
@@ -21,21 +19,10 @@
   position: relative;
 }
 
-.landing-page-info input {
+.landing-page-info input.underlined-input {
   display: block;
   width: 100%;
-  border: none;
-  color: #4a4a4a;
-  border-bottom: 2px solid #4a4a4a;
   padding: 10px 40px 10px 10px;
-  outline: none;
-  box-sizing: border-box;
-  font-size: 16px;
-  background: transparent;
-}
-
-.landing-page-info input:focus {
-  border-color:#0066f5;
 }
 
 .landing-page-info button {
