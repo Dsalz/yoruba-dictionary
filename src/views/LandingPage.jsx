@@ -80,10 +80,12 @@ class LandingPage extends Component {
       firestore()
         .collection("words")
         .where("unmarked", "==", query)
+        .where("approved", "==", true)
         .get(),
       firestore()
         .collection("words")
         .where("marked", "==", query)
+        .where("approved", "==", true)
         .get()
     ]);
 
