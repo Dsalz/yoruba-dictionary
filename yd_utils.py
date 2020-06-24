@@ -1,4 +1,5 @@
 import sys
+import random
 import firebase_admin
 from firebase_admin import credentials 
 from firebase_admin import firestore 
@@ -24,11 +25,17 @@ def batch_write_from_csv(filepath, collection):
     new_words = load_csv_into_json(filepath)
     sanity_check_json(new_words)
 
+def get_random_word():
+    random_number = random.random()
+    words_ref = db.collection("words")
+    first_after_random = words_ref.order_by("random").start_at({"random": random_number}).limit(1)
+    return {doc.id: doc.to_dict() for doc in first_after_random.get() }
 
 if __name__ == "__main__":
     GET = 'get_doc_by_collection_and_id'
     BATCH_WRITE = 'batch_write_from_csv'
     UPDATE = "update_document_by_id"
+    GET_RANDOM = "get_random_word"
     valid_flags = [GET, BATCH_WRITE, UPDATE]
     if sys.argv[1] == GET:
         assert(len(sys.argv) in (3, 4))
@@ -39,6 +46,8 @@ if __name__ == "__main__":
     elif sys.argv[1] == UPDATE:
         assert (len(sys.argv) == 3)
         print("Feature not yet implemented")
+    elif sys.argv[1] == GET_RANDOM:
+        print(get_random_word())
     else:
         raise Exception("invalid flag used. The only options this script has are {}".format(valid_flags))
 
@@ -50,5 +59,5 @@ $ python yd_utils.py get_doc_by_collection_and_id 2Z56yhUcz1dro04xefh4
 
 TODO
 $ python yd_utils.py batch_write_from_csv path/to/the/csv/file
-> DONE. 
+> DONE.
 """
