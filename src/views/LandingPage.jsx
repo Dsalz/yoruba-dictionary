@@ -66,36 +66,50 @@ class LandingPage extends Component {
    * @method search
    * @description The function that handles searching
    * @param {object} searchParam - search parameter
+   * @param {boolean} random - whether to find a random word or not
    * @returns {undefined}
    */
-  search = async searchParam => {
-    const { query: stateQuery } = this.state;
-    const query = (stateQuery || searchParam).toLowerCase();
-    this.setState({
-      loading: true,
-      formSubmitted: true
-    });
-    window.history.pushState(null, null, `/?query=${query}`);
-    const response = await Promise.all([
-      firestore()
-        .collection("words")
-        .where("unmarked", "==", query)
-        .where("approved", "==", true)
-        .get(),
-      firestore()
-        .collection("words")
-        .where("marked", "==", query)
-        .where("approved", "==", true)
-        .get()
-    ]);
+  search = async (searchParam, random = false) => {
+    let response = "";
+    if (random) {
+      response = await Promise.all([
+        firestore()
+          .collection("words")
+          .orderBy("random")
+          .startAt({ random: 0.2 })
+          .limit(1)
+          .get()
+      ]);
+    } else {
+      const { query: stateQuery } = this.state;
+      const query = (stateQuery || searchParam).toLowerCase();
+      this.setState({
+        loading: true,
+        formSubmitted: true
+      });
+      window.history.pushState(null, null, `/?query=${query}`);
+      response = await Promise.all([
+        firestore()
+          .collection("words")
+          .where("unmarked", "==", query)
+          .where("approved", "==", true)
+          .get(),
+        firestore()
+          .collection("words")
+          .where("marked", "==", query)
+          .where("approved", "==", true)
+          .get()
+      ]);
+    }
 
     const meanings = [];
     const answers = [];
-
+    // console.log(response);
     response
       .reduce((acc, currVal) => acc.concat(currVal.docs), [])
       .forEach(doc => {
         const data = doc.data();
+        console.log(data);
         if (meanings.includes(data.meaning)) {
           return;
         }
@@ -118,6 +132,17 @@ class LandingPage extends Component {
   handleSubmit = async e => {
     e.preventDefault();
     this.search();
+  };
+
+  /**
+   * @method handleRandom
+   * @description The function that handles a request for a random word
+   * @param {object} e - event object
+   * @returns {undefined}
+   */
+  handleRandom = async e => {
+    e.preventDefault();
+    this.search("can we remove this param?", true);
   };
 
   /**
@@ -158,6 +183,11 @@ class LandingPage extends Component {
                   </svg>
                 </button>
               </form>
+            </div>
+            <div>
+              <button type="submit" onClick={this.handleRandom}>
+                Random Word
+              </button>
             </div>
           </section>
           {formSubmitted && (
