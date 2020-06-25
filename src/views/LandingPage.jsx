@@ -81,7 +81,7 @@ class LandingPage extends Component {
     let response, query;
 
     if (random) {
-      const randomNo = Number.parseFloat(Math.random()).toFixed(1);
+      const randomNo = Number.parseFloat(Math.random());
       response = await Promise.all([
         firestore()
           .collection("words")
