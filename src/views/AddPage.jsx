@@ -10,7 +10,6 @@ import Alert from "../components/Alert";
 
 // CSS
 import "../css/AddPage.css";
-// import { firestore } from "firebase";
 
 /**
  * @class AddPage
