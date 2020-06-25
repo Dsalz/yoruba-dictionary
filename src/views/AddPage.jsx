@@ -16,7 +16,6 @@ import "../css/AddPage.css";
  */
 class AddPage extends Component {
   state = {
-    unmarked: "",
     marked: "",
     pos: "",
     example_eng: "",
@@ -54,12 +53,14 @@ class AddPage extends Component {
     });
 
     try {
-      // eslint-disable-next-line no-empty-patter  
-      
+      // eslint-disable-next-line no-empty-patter
+
       firestore()
         .collection("words")
         .add({
-          unmarked: this.state.unmarked,
+          unmarked: this.state.marked
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, ""),
           marked: this.state.marked,
           pos: this.state.pos,
           example_eng: this.state.example_eng,
@@ -75,7 +76,6 @@ class AddPage extends Component {
       this.setState({
         loading: false,
         formSubmitted: true,
-        unmarked: "",
         marked: "",
         pos: "",
         example_eng: "",
@@ -99,7 +99,6 @@ class AddPage extends Component {
    */
   render() {
     const {
-      unmarked,
       loading,
       marked,
       pos,
@@ -121,15 +120,6 @@ class AddPage extends Component {
               </h1>
               <input
                 type="text"
-                name="unmarked"
-                value={unmarked}
-                placeholder="Enter unmarked word here"
-                onChange={this.handleChange}
-                required
-                className="underlined-input"
-              />
-              <input
-                type="text"
                 name="marked"
                 value={marked}
                 placeholder="Enter marked word here"
@@ -141,7 +131,7 @@ class AddPage extends Component {
                 type="text"
                 name="pos"
                 value={pos}
-                placeholder="Enter type of word here (e.g Noun, Adjective)"
+                placeholder="Enter part of speech here (e.g Noun, Adjective)"
                 onChange={this.handleChange}
                 required
                 className="underlined-input"
@@ -159,16 +149,7 @@ class AddPage extends Component {
                 type="text"
                 name="meaning_yor"
                 value={meaning_yor}
-                placeholder="Enter meaning in yoruba"
-                onChange={this.handleChange}
-                required
-                className="underlined-input"
-              />
-              <input
-                type="text"
-                name="example_eng"
-                value={example_eng}
-                placeholder="Enter example usage in english"
+                placeholder="Enter meaning in yorùbá"
                 onChange={this.handleChange}
                 required
                 className="underlined-input"
@@ -177,7 +158,16 @@ class AddPage extends Component {
                 type="text"
                 name="example_yor"
                 value={example_yor}
-                placeholder="Enter example usage in yoruba"
+                placeholder="Enter example usage in yorùbá"
+                onChange={this.handleChange}
+                required
+                className="underlined-input"
+              />
+              <input
+                type="text"
+                name="example_eng"
+                value={example_eng}
+                placeholder="Enter english translation of example usage in yorùbá"
                 onChange={this.handleChange}
                 required
                 className="underlined-input"
