@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 /* eslint-disable react/prop-types */
 import React, { Fragment, Component } from "react";
-// import { firestore } from "firebase";
+import { firestore } from "firebase";
 
 // Components
 import Navbar from "../components/Navbar";
@@ -10,6 +10,7 @@ import Alert from "../components/Alert";
 
 // CSS
 import "../css/AddPage.css";
+// import { firestore } from "firebase";
 
 /**
  * @class AddPage
@@ -54,17 +55,20 @@ class AddPage extends Component {
     });
 
     try {
-      // eslint-disable-next-line no-empty-pattern
-      const {
-        // unmarked,
-        // loading,
-        // marked,
-        // pos,
-        // example_eng,
-        // example_yor,
-        // meaning_eng,
-        // meaning_yor
-      } = this.state;
+      // eslint-disable-next-line no-empty-patter  
+      
+      firestore()
+        .collection("words")
+        .add({
+          unmarked: this.state.unmarked,
+          marked: this.state.marked,
+          pos: this.state.pos,
+          example_eng: this.state.example_eng,
+          example_yor: this.state.example_yor,
+          meaning_eng: this.state.meaning_eng,
+          meaning_yor: this.state.meaning_yor,
+          approved: false
+        });
 
       // Code to update collection with data (Uncomment code above and save to database)
 
