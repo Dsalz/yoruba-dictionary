@@ -66,7 +66,8 @@ class AddPage extends Component {
           example_yor: this.state.example_yor,
           meaning_eng: this.state.meaning_eng,
           meaning_yor: this.state.meaning_yor,
-          approved: false
+          approved: false,
+          random: Number(Number.parseFloat(Math.random()))
         });
 
       // Code to update collection with data (Uncomment code above and save to database)
