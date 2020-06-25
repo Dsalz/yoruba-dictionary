@@ -25,7 +25,7 @@
   padding: 10px 40px 10px 10px;
 }
 
-.landing-page-info button {
+.landing-page-info form button {
   padding: 0;
   position: absolute;
   right: 10px;
@@ -36,17 +36,22 @@
   outline: none;
 }
 
-.landing-page-info button svg {
+.landing-page-info form button svg {
   height: 25px;
   width: 25px;
 }
 
-.landing-page-info button svg path{
+.landing-page-info form button svg path{
   fill: #4a4a4a;
 }
 
-.landing-page-info button:hover svg path {
+.landing-page-info form button:hover svg path {
   fill: #0066f5;
+}
+
+.landing-page-info button.random-btn {
+  margin: 20px auto;
+  display: block;
 }
 
 .landing-page-answers {

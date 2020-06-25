@@ -31,10 +31,12 @@ class LandingPage extends Component {
     const { location } = this.props;
     const query = location?.search?.split("query=")[1];
     if (query) {
-      this.setState({
-        query
-      });
-      this.search(query);
+      this.setState(
+        {
+          query
+        },
+        this.search
+      );
     }
   }
 
@@ -65,29 +67,46 @@ class LandingPage extends Component {
   /**
    * @method search
    * @description The function that handles searching
-   * @param {object} searchParam - search parameter
+   * @param {boolean} random - whether to find a random word or not
    * @returns {undefined}
    */
-  search = async searchParam => {
+  search = async random => {
     const { query: stateQuery } = this.state;
-    const query = (stateQuery || searchParam).toLowerCase();
+
     this.setState({
       loading: true,
       formSubmitted: true
     });
-    window.history.pushState(null, null, `/?query=${query}`);
-    const response = await Promise.all([
-      firestore()
-        .collection("words")
-        .where("unmarked", "==", query)
-        .where("approved", "==", true)
-        .get(),
-      firestore()
-        .collection("words")
-        .where("marked", "==", query)
-        .where("approved", "==", true)
-        .get()
-    ]);
+
+    let response, query;
+
+    if (random) {
+      const randomNo = Number.parseFloat(Math.random()).toFixed(1);
+      response = await Promise.all([
+        firestore()
+          .collection("words")
+          .orderBy("random")
+          .startAt(Number(randomNo))
+          .limit(1)
+          .get()
+      ]);
+      console.log(randomNo);
+      console.log(response);
+    } else {
+      query = stateQuery.toLowerCase().trim();
+      response = await Promise.all([
+        firestore()
+          .collection("words")
+          .where("unmarked", "==", query)
+          .where("approved", "==", true)
+          .get(),
+        firestore()
+          .collection("words")
+          .where("marked", "==", query)
+          .where("approved", "==", true)
+          .get()
+      ]);
+    }
 
     const meanings = [];
     const answers = [];
@@ -103,10 +122,21 @@ class LandingPage extends Component {
         meanings.push(data.meaning);
       });
 
-    this.setState({
+    if (random && answers.length) {
+      query = answers[0].unmarked.toLowerCase();
+    }
+
+    const newState = {
       answers,
       loading: false
-    });
+    };
+
+    if (query) {
+      window.history.pushState(null, null, `/?query=${query}`);
+      newState.query = query;
+    }
+
+    this.setState(newState);
   };
 
   /**
@@ -118,6 +148,17 @@ class LandingPage extends Component {
   handleSubmit = async e => {
     e.preventDefault();
     this.search();
+  };
+
+  /**
+   * @method handleRandom
+   * @description The function that handles a request for a random word
+   * @param {object} e - event object
+   * @returns {undefined}
+   */
+  handleRandom = async e => {
+    e.preventDefault();
+    this.search(true);
   };
 
   /**
@@ -158,6 +199,13 @@ class LandingPage extends Component {
                   </svg>
                 </button>
               </form>
+              <button
+                className="blue-btn random-btn"
+                type="button"
+                onClick={this.handleRandom}
+              >
+                Get Random Word
+              </button>
             </div>
           </section>
           {formSubmitted && (

@@ -48,6 +48,7 @@ main {
 .blue-btn {
   background: #0066f5;
   cursor: pointer;
+  font-family: inherit;
 }
 
 .alert {
