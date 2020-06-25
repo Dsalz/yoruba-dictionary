@@ -52,26 +52,31 @@ class AddPage extends Component {
       loading: true
     });
 
+    const {
+      marked,
+      pos,
+      example_eng,
+      example_yor,
+      meaning_eng,
+      meaning_yor
+    } = this.state;
+
     try {
       // eslint-disable-next-line no-empty-patter
 
       firestore()
         .collection("words")
         .add({
-          unmarked: this.state.marked
-            .normalize("NFD")
-            .replace(/[\u0300-\u036f]/g, ""),
-          marked: this.state.marked,
-          pos: this.state.pos,
-          example_eng: this.state.example_eng,
-          example_yor: this.state.example_yor,
-          meaning_eng: this.state.meaning_eng,
-          meaning_yor: this.state.meaning_yor,
+          unmarked: marked.normalize("NFD").replace(/[\u0300-\u036f]/g, ""),
+          marked,
+          pos,
+          example_eng,
+          example_yor,
+          meaning_eng,
+          meaning_yor,
           approved: false,
-          random: Number(Number.parseFloat(Math.random()))
+          random: Number.parseFloat(Math.random())
         });
-
-      // Code to update collection with data (Uncomment code above and save to database)
 
       this.setState({
         loading: false,

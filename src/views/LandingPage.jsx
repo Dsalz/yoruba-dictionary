@@ -86,7 +86,7 @@ class LandingPage extends Component {
         firestore()
           .collection("words")
           .orderBy("random")
-          .startAt(Number(randomNo))
+          .startAt(randomNo)
           .limit(1)
           .get()
       ]);
