@@ -1,10 +1,10 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { func } from "prop-types";
+import { func, bool } from "prop-types";
 
 const defaultImg = "https://placehold.it/100";
 
-const ResponsiveNav = ({ toggleResponsiveMenu }) => {
+const ResponsiveNav = ({ toggleResponsiveMenu, isLoggedIn, logout }) => {
   return (
     <div className="index-responsive-menu">
       <div
@@ -24,13 +24,21 @@ const ResponsiveNav = ({ toggleResponsiveMenu }) => {
         <NavLink to="/add">Add Word</NavLink>
         <NavLink to="/about">About Us</NavLink>
         <NavLink to="/contact-us">Contact Us</NavLink>
+        {!isLoggedIn && <NavLink to="/login">Login</NavLink>}
+        {isLoggedIn && (
+          <span role="presentation" onClick={logout}>
+            Logout
+          </span>
+        )}
       </div>
     </div>
   );
 };
 
 ResponsiveNav.propTypes = {
-  toggleResponsiveMenu: func.isRequired
+  toggleResponsiveMenu: func.isRequired,
+  logout: func.isRequired,
+  isLoggedIn: bool.isRequired
 };
 
 export default ResponsiveNav;

@@ -53,7 +53,7 @@ main {
 
 .alert {
   display: block;
-  margin: 10px auto;
+  margin: 10px auto -40px;
   text-align: center;
 }
 

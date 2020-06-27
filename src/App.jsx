@@ -3,10 +3,13 @@ import firebase from "firebase";
 import React from "react";
 import { render } from "react-dom";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { Provider } from "react-redux";
+import { createStore } from "redux";
 import dotenv from "dotenv";
 
 // Views
 import LandingPage from "./views/LandingPage";
+import LoginPage from "./views/LoginPage";
 import AddPage from "./views/AddPage";
 import ComingSoonPage from "./views/ComingSoon";
 
@@ -15,6 +18,9 @@ import ScrollToTop from "./ScrollToTop";
 
 // CSS
 import "./css/App.css";
+
+// Reducer
+import rootReducer from "./store/reducers/rootReducer";
 
 dotenv.config();
 
@@ -32,6 +38,8 @@ const config = {
 firebase.initializeApp(config);
 firebase.analytics();
 
+const store = createStore(rootReducer);
+
 const App = () => {
   return (
     <BrowserRouter>
@@ -39,6 +47,7 @@ const App = () => {
         <Switch>
           <Route exact path="/about" component={ComingSoonPage} />
           <Route exact path="/contact-us" component={ComingSoonPage} />
+          <Route exact path="/login" component={LoginPage} />
           <Route path="/add" component={AddPage} />
           <Route path="*" component={LandingPage} />
         </Switch>
@@ -49,4 +58,9 @@ const App = () => {
 
 const appDiv = document.getElementById("app");
 
-render(<App />, appDiv);
+render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  appDiv
+);
