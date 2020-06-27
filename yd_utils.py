@@ -25,6 +25,12 @@ def batch_write_from_csv(filepath, collection):
     new_words = load_csv_into_json(filepath)
     sanity_check_json(new_words)
 
+def count_words():
+    count = 0
+    for _ in db.collection("words").get():
+        count += 1
+    return count
+
 def set_random_fields():
     # this function scans through the database and sets a random field for any
     # word record that does not have one
@@ -51,6 +57,7 @@ if __name__ == "__main__":
     UPDATE = "update_document_by_id"
     GET_RANDOM = "get_random_word"
     SET_RANDOM_FIELDS = "set_random_fields"
+    COUNT_ENTRIES = "count_words"
     valid_flags = [GET, BATCH_WRITE, UPDATE]
     if sys.argv[1] == GET:
         assert(len(sys.argv) in (3, 4))
@@ -66,6 +73,8 @@ if __name__ == "__main__":
     elif sys.argv[1] == SET_RANDOM_FIELDS:
         set_random_fields()
         print("DONE.")
+    elif sys.argv[1] == COUNT_ENTRIES:
+        print(count_words())
     else:
         raise Exception("invalid flag used. The only options this script has are {}".format(valid_flags))
 
