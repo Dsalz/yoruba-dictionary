@@ -31,8 +31,6 @@ class LoginPage extends Component {
     const { login } = this.props;
     auth().onAuthStateChanged(userAuth => {
       if (userAuth) {
-        // Logging here cause i have no idea how the response is structured
-        console.log(userAuth);
         login(userAuth);
         this.setState({
           loading: false,
