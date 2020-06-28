@@ -89,7 +89,7 @@ class LoginPage extends Component {
     const { loading, email, password, error } = this.state;
     const { isLoggedIn } = this.props;
     return isLoggedIn ? (
-      <Redirect to="/" />
+      <Redirect to="/dashboard" />
     ) : (
       <Fragment>
         <Navbar solid />
@@ -115,7 +115,9 @@ class LoginPage extends Component {
                 required
                 className="underlined-input"
               />
-              {error && <Alert type="error" message={error} />}
+              {error && (
+                <Alert type="error" message={error} customClass="no-distort" />
+              )}
               <button className="blue-btn" type="submit" disabled={loading}>
                 Login
               </button>

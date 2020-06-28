@@ -1,0 +1,44 @@
+.dashboard {
+  justify-content: flex-end;
+}
+
+.dashboard aside {
+  width: 200px;
+  position: fixed;
+  top: 80px;
+  left: 0;
+  height: calc(100vh - 80px);
+  background: #fff;
+}
+
+.dashboard  section {
+  width: calc(100vw - 200px);
+  height: calc(100vh - 100px);
+  overflow: auto;
+  padding: 0 50px;
+  box-sizing: border-box;
+}
+
+.dashboard aside ul ,
+.dashboard aside li {
+  padding: 0;
+  margin: 0;;
+}
+
+.dashboard aside a {
+  display: block;
+  background: transparent;
+  color: #0066f5;
+  font-weight: 600;
+  padding: 20px 0;
+  text-align: center;
+  width: 100%;
+  text-decoration: none;
+}
+
+ .dashboard aside li.active,
+  .dashboard aside li.active a {
+  color: #fff;
+  background: #0066f5;
+  cursor: pointer;
+}

@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
+import { auth } from "firebase";
 import { func, bool } from "prop-types";
 
 // CSS
@@ -82,15 +83,17 @@ Navbar.propTypes = {
   isLoggedIn: bool.isRequired
 };
 
-const mapStateToProps = ({ auth }) => ({
-  isLoggedIn: auth.isLoggedIn
+const mapStateToProps = ({ auth: stateAuth }) => ({
+  isLoggedIn: stateAuth.isLoggedIn
 });
 
 const mapDispatchToProps = dispatch => ({
-  logout: () =>
-    dispatch({
+  logout: () => {
+    auth().signOut();
+    return dispatch({
       type: LOGOUT
-    })
+    });
+  }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

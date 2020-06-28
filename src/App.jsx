@@ -9,6 +9,7 @@ import dotenv from "dotenv";
 
 // Views
 import LandingPage from "./views/LandingPage";
+import Dashboard from "./views/Dashboard";
 import LoginPage from "./views/LoginPage";
 import AddPage from "./views/AddPage";
 import ComingSoonPage from "./views/ComingSoon";
@@ -52,6 +53,7 @@ const App = () => {
           <Route exact path="/login" component={LoginPage} />
           <Route path="/add" component={AddPage} />
           <Route path="/request" component={RequestPage} />
+          <Route path="/dashboard" component={Dashboard} />
           <Route path="*" component={LandingPage} />
         </Switch>
       </ScrollToTop>

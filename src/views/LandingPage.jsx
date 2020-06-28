@@ -7,9 +7,16 @@ import { firestore } from "firebase";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Loader from "../components/Loader";
+import WordItem from "../components/WordItem";
 
 // CSS
 import "../css/LandingPage.css";
+
+// Utils
+import {
+  extractFirebaseDataFromArrayResponse,
+  pronounceWord
+} from "../../utils";
 
 /**
  * @class LandingPage
@@ -39,18 +46,6 @@ class LandingPage extends Component {
       );
     }
   }
-
-  /**
-   * @method pronounceWord
-   * @description The function that pronounces words
-   * @param {object} word - word
-   * @returns {undefined}
-   */
-  pronounceWord = word => {
-    new Audio(
-      `https://gentle-falls-68008.herokuapp.com/api/v1/names/${word}`
-    ).play();
-  };
 
   /**
    * @method handleChange
@@ -108,19 +103,7 @@ class LandingPage extends Component {
       ]);
     }
 
-    const meanings = [];
-    const answers = [];
-
-    response
-      .reduce((acc, currVal) => acc.concat(currVal.docs), [])
-      .forEach(doc => {
-        const data = doc.data();
-        if (meanings.includes(data.meaning)) {
-          return;
-        }
-        answers.push(data);
-        meanings.push(data.meaning);
-      });
+    const answers = extractFirebaseDataFromArrayResponse(response, true);
 
     if (random && answers.length) {
       query = answers[0].unmarked.toLowerCase();
@@ -215,67 +198,21 @@ class LandingPage extends Component {
               {!loading &&
                 answers.map(
                   ({
-                    marked,
-                    unmarked,
-                    pos,
-                    meaning,
                     example_eng,
                     example_yor,
                     meaning_eng,
-                    meaning_yor
+                    meaning_yor,
+                    ...answer
                   }) => (
-                    <article key={`${marked}-${pos}`}>
-                      <h2 className="d-flex align-items-center">
-                        {marked || unmarked}
-                        {pos && <span>{pos}</span>}
-                      </h2>
-                      <div className="pronounciation-div d-flex align-items-center">
-                        Pronunciation:
-                        <button
-                          type="button"
-                          onClick={() => this.pronounceWord(marked)}
-                        >
-                          <i className="fas fa-volume-up" />
-                        </button>
-                      </div>
-                      <div className="answer-section">
-                        {meaning && !meaning_eng && (
-                          <p>
-                            <b>Meaning:</b> {meaning}
-                          </p>
-                        )}
-                        {meaning_eng && (
-                          <p>
-                            <Fragment>
-                              <b>Meaning:</b> {meaning_eng}
-                            </Fragment>
-                          </p>
-                        )}
-                        {meaning_yor && meaning_eng && (
-                          <p>
-                            <Fragment>
-                              <b>Ìtumọ̀:</b> {meaning_yor}
-                            </Fragment>
-                          </p>
-                        )}
-                      </div>
-                      <div className="answer-section">
-                        {example_eng && (
-                          <p>
-                            <Fragment>
-                              <b>Example:</b> {example_eng}
-                            </Fragment>
-                          </p>
-                        )}
-                        {example_yor && example_eng && (
-                          <p>
-                            <Fragment>
-                              <b>Àpẹrẹ:</b> {example_yor}
-                            </Fragment>
-                          </p>
-                        )}
-                      </div>
-                    </article>
+                    <WordItem
+                      key={`${answer.marked}-${answer.pos}`}
+                      {...answer}
+                      exampleEng={example_eng}
+                      exampleYor={example_yor}
+                      meaningEng={meaning_eng}
+                      meaningYor={meaning_yor}
+                      pronounceWord={pronounceWord}
+                    />
                   )
                 )}
             </section>

@@ -50,8 +50,6 @@ class RequestPage extends Component {
     const { marked } = this.state;
 
     try {
-      // eslint-disable-next-line no-empty-patter
-
       firestore()
         .collection("requests")
         .add({

@@ -53,8 +53,12 @@ main {
 
 .alert {
   display: block;
-  margin: 10px auto -40px;
+  margin: 10px auto;
   text-align: center;
+}
+
+.alert.no-distort {
+  margin-bottom: -40px;
 }
 
 .blue-btn,
@@ -79,4 +83,64 @@ main {
 .page-header {
   font-size: 40px;
   color: #4a4a4a;
+}
+
+
+.word-item {
+  box-shadow: 0 0.625rem 2.5rem 0 rgba(198, 203, 222, 0.45);
+  background: #fff;
+  margin: 0 0 10px;
+  padding: 20px;
+  text-align: left;
+}
+
+.word-item span{
+  background: #0066f5;
+  color: #fff;
+  font-size: 12px;
+  padding: 5px;
+  border-radius: 5px;
+  margin-left: 10px;
+}
+
+.word-item div p{
+  margin: 10px 0;
+}
+
+.word-item div p,
+.word-item span{
+  text-transform: capitalize;
+}
+
+.word-item div h4 {
+  margin-bottom: 10px;
+}
+
+.word-item button.pronounce-btn {
+  background: transparent;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  margin-left: 5px;
+}
+
+.word-item div.pronounciation-div {
+  margin: 10px 0 20px;
+}
+
+.word-item button.pronounce-btn i {
+  font-size: 24px;
+}
+
+.word-item button.pronounce-btn:hover i {
+  color: #0066f5
+}
+
+.word-item .answer-section {
+  margin: 30px 0;
+}
+
+.word-item .approve-btn {
+  padding: 10px;
 }
