@@ -85,13 +85,12 @@ class LandingPage extends Component {
       response = await Promise.all([
         firestore()
           .collection("words")
+          .where("approved", "==", true)
           .orderBy("random")
           .startAt(randomNo)
           .limit(1)
           .get()
       ]);
-      console.log(randomNo);
-      console.log(response);
     } else {
       query = stateQuery.toLowerCase().trim();
       response = await Promise.all([
