@@ -62,6 +62,7 @@ const Navbar = ({ isLoggedIn, logout }) => {
 
         <div className="index-navbar-links">
           <NavLink to="/add">Add Word</NavLink>
+          <NavLink to="/request">Request Word</NavLink>
           <NavLink to="/about">About</NavLink>
           <NavLink to="/contact-us">Contact Us</NavLink>
           {!isLoggedIn && <NavLink to="/login">Login</NavLink>}
