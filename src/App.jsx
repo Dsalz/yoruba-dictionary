@@ -38,6 +38,7 @@ const config = {
 
 firebase.initializeApp(config);
 firebase.analytics();
+firebase.performance();
 
 const store = createStore(rootReducer);
 
