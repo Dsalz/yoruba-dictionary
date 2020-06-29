@@ -105,6 +105,15 @@ class LandingPage extends Component {
 
     const answers = extractFirebaseDataFromArrayResponse(response, true);
 
+    if (answers.length === 0) {
+      firestore()
+        .collection("requests")
+        .add({
+          marked: query,
+          source: "UNDEFINED_WORD"
+        });
+    }
+
     if (random && answers.length) {
       query = answers[0].unmarked.toLowerCase();
     }
