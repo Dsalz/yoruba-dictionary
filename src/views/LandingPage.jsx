@@ -203,7 +203,7 @@ class LandingPage extends Component {
           {formSubmitted && (
             <section className="landing-page-answers">
               {loading && <Loader />}
-              {!loading && answers.length === 0 && "No Matching Results"}
+              {!loading && answers.length === 0 && "No Current Matching Results, Your Word Will Be Available Soon"}
               {!loading &&
                 answers.map(
                   ({
