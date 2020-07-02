@@ -31,8 +31,8 @@ class Dashboard extends Component {
     requestedWords: [],
     approvedWords: [],
     loading: true,
-    addFormLoading: true,
-    editFormLoading: true,
+    addFormLoading: false,
+    editFormLoading: false,
     editWordId: "",
     marked: "",
     pos: "",
@@ -213,9 +213,11 @@ class Dashboard extends Component {
   /**
    * @method addWord
    * @description The function that handles word addition
+   * @param {object} e - event object
    * @returns {undefined}
    */
-  addWord = async () => {
+  addWord = async e => {
+    e.preventDefault();
     const {
       marked,
       pos,
@@ -268,9 +270,11 @@ class Dashboard extends Component {
   /**
    * @method editWord
    * @description The function that handles word edit
+   * @param {object} e - event object
    * @returns {undefined}
    */
-  editWord = async () => {
+  editWord = async e => {
+    e.preventDefault();
     const {
       marked,
       pos,
