@@ -203,7 +203,7 @@ class LandingPage extends Component {
           {formSubmitted && (
             <section className="landing-page-answers">
               {loading && <Loader />}
-              {!loading && answers.length === 0 && "No Matching Results"}
+              {!loading && answers.length === 0 && "We didn't find " + query + " but we are doing all we can to get and publish the meaning of "+ query+ ". Please consider contributing the meaning if you know it"}
               {!loading &&
                 answers.map(
                   ({
