@@ -2,6 +2,7 @@
 /* eslint-disable react/prop-types */
 import React, { Fragment, Component } from "react";
 import { firestore } from "firebase";
+import { Link } from "react-router-dom";
 
 // Components
 import Navbar from "../components/Navbar";
@@ -115,7 +116,8 @@ class LandingPage extends Component {
     }
 
     if (random && answers.length) {
-      query = answers[0].unmarked.toLowerCase();
+      const { marked, unmarked } = answers[0];
+      query = (unmarked || marked)?.toLowerCase();
     }
 
     const newState = {
@@ -203,7 +205,15 @@ class LandingPage extends Component {
           {formSubmitted && (
             <section className="landing-page-answers">
               {loading && <Loader />}
-              {!loading && answers.length === 0 && "We didn't find " + query + " but we are doing all we can to get and publish the meaning of "+ query+ ". Please consider contributing the meaning if you know it"}
+              {!loading && answers.length === 0 && (
+                <p>
+                  {`We didn't find ${query} but we are doing all we can to get and publish the meaning of ${query}. Please consider `}
+                  <Link to="/request" className="contribute-link">
+                    contributing
+                  </Link>
+                  {" the meaning if you know it"}
+                </p>
+              )}
               {!loading &&
                 answers.map(
                   ({

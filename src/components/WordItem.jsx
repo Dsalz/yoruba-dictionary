@@ -1,6 +1,10 @@
 /* eslint-disable react/prop-types */
 import React, { Fragment } from "react";
 
+const getShareData = (url, word) => {
+  return `Checkout this word ${word} at ${url}`;
+};
+
 const WordItem = ({
   marked,
   unmarked,
@@ -11,8 +15,9 @@ const WordItem = ({
   meaningEng,
   meaningYor,
   pronounceWord,
-  pendingApproval,
-  approveDefinition
+  forEdit,
+  handleEdit,
+  editText
 }) => (
   <article className="word-item">
     <h2 className="d-flex align-items-center">
@@ -66,13 +71,43 @@ const WordItem = ({
         </p>
       )}
     </div>
-    {pendingApproval && (
+    {!forEdit && (
+      <div className="answer-section">
+        <p>Share Via:</p>
+        <div className="socials-wrapper d-flex">
+          <button
+            type="button"
+            onClick={() =>
+              window.open(
+                `https://twitter.com/intent/tweet?text=${getShareData(
+                  window.location.href,
+                  marked || unmarked
+                )}&hashtags=yoruba,yorubawords`
+              )
+            }
+          >
+            <i className="fab fa-twitter" />
+          </button>
+          <button
+            type="button"
+            onClick={() =>
+              window.open(
+                `https://www.facebook.com/sharer.php?u=${window.location.href}`
+              )
+            }
+          >
+            <i className="fab fa-facebook-f" />
+          </button>
+        </div>
+      </div>
+    )}
+    {forEdit && (
       <button
         type="button"
         className="blue-btn approve-btn"
-        onClick={approveDefinition}
+        onClick={handleEdit}
       >
-        Approve Definition
+        {editText}
       </button>
     )}
   </article>

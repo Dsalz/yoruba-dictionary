@@ -61,3 +61,8 @@
   text-align: center;
   color: #4a4a4a;
 }
+
+.landing-page-answers .contribute-link {
+  color: #0066f5;
+  text-decoration: underline;
+}

@@ -62,8 +62,6 @@ class AddPage extends Component {
     } = this.state;
 
     try {
-      // eslint-disable-next-line no-empty-patter
-
       firestore()
         .collection("words")
         .add({

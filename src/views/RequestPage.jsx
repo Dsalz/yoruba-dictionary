@@ -50,7 +50,7 @@ class RequestPage extends Component {
     const { marked } = this.state;
 
     try {
-      firestore()
+      await firestore()
         .collection("requests")
         .add({
           marked,

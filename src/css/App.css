@@ -144,3 +144,62 @@ main {
 .word-item .approve-btn {
   padding: 10px;
 }
+
+.requested-item-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.requested-item {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin: 20px 0;
+  box-shadow: 0 0.625rem 2.5rem 0 rgba(198, 203, 222, 0.45);
+  border-radius: 5px;
+  padding: 20px;
+}
+
+.requested-item h6{
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+  margin: 0;
+}
+
+.requested-item button{
+  padding: 10px;
+}
+
+
+.socials-wrapper button {
+  border-radius: 50%;
+  font-size: 25px;
+  margin-right: 5px;
+  border: none;
+  color: #fff;
+  width: 30px;
+  height: 30px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 3px;
+}
+
+.socials-wrapper button:first-of-type {
+  background: #38a1f3;
+}
+
+.socials-wrapper button:nth-of-type(2) {
+  background: #4267b2;
+}
+
+.socials-wrapper button:nth-of-type(3) {
+  background: rgb(31, 138, 196);
+}
+
+.socials-wrapper button:last-of-type {
+  background: #0077b5;
+}

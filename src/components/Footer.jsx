@@ -10,7 +10,7 @@ const Footer = () => {
       <section className="footer-section">
         <Link to="/about">About Us</Link>
         <Link to="/contact-us">Contact Us</Link>
-        <div className="footer-socials d-flex">
+        <div className="socials-wrapper d-flex footer-socials">
           <button
             type="button"
             onClick={() => window.open("https://twitter.com/YorubaNames")}

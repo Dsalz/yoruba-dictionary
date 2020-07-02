@@ -8,18 +8,17 @@ import { firestore } from "firebase";
 // Components
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import Alert from "../components/Alert";
-import Loader from "../components/Loader";
-import WordItem from "../components/WordItem";
+import DashboardApproveWordPage from "../components/DashboardApproveWordPage";
+import DashboardWordsRequestedPage from "../components/DashboardWordsRequestedPage";
+import DashboardAddWordPage from "../components/DashboardAddWordPage";
+import DashboardEditWordPage from "../components/DashboardEditWordPage";
+import DashboardWordsListPage from "../components/DashboardWordsListPage";
 
 // CSS
 import "../css/Dashboard.css";
 
 // Utils
-import {
-  extractFirebaseDataFromArrayResponse,
-  pronounceWord
-} from "../../utils";
+import { extractFirebaseDataFromArrayResponse } from "../../utils";
 
 /**
  * @class Dashboard
@@ -30,7 +29,18 @@ class Dashboard extends Component {
     error: "",
     pendingWords: [],
     requestedWords: [],
-    loading: true
+    approvedWords: [],
+    loading: true,
+    addFormLoading: true,
+    editFormLoading: true,
+    editWordId: "",
+    marked: "",
+    pos: "",
+    exampleEng: "",
+    exampleYor: "",
+    meaningEng: "",
+    meaningYor: "",
+    formSubmitted: false
   };
 
   /**
@@ -39,13 +49,15 @@ class Dashboard extends Component {
    * @returns {undefined}
    */
   async componentDidMount() {
-    const [pendingWords, requestedWords] = await Promise.all([
+    const [pendingWords, requestedWords, approvedWords] = await Promise.all([
       this.getWordsPendingApproval(),
-      this.getWordsRequested()
+      this.getWordsRequested(),
+      this.getWordsApproved()
     ]);
     this.setState({
       pendingWords,
       requestedWords,
+      approvedWords,
       loading: false
     });
   }
@@ -60,6 +72,22 @@ class Dashboard extends Component {
       firestore()
         .collection("words")
         .where("approved", "==", false)
+        .get()
+    ]);
+
+    return extractFirebaseDataFromArrayResponse(response, false);
+  };
+
+  /**
+   * @method getWordsApproved
+   * @description The function that fetches words that have been approved
+   * @returns {undefined}
+   */
+  getWordsApproved = async () => {
+    const response = await Promise.all([
+      firestore()
+        .collection("words")
+        .where("approved", "==", true)
         .get()
     ]);
 
@@ -90,7 +118,56 @@ class Dashboard extends Component {
   handleChange = e => {
     this.setState({
       [e.target.name]: e.target.value,
-      error: ""
+      error: "",
+      formSubmitted: false
+    });
+  };
+
+  /**
+   * @method openRequestedWordForm
+   * @description The function that loads the add word form with requested word
+   * @param {string} word - requested word
+   * @returns {undefined}
+   */
+  openRequestedWordForm = word => {
+    this.setState({
+      marked: word,
+      pos: "",
+      exampleEng: "",
+      exampleYor: "",
+      meaningEng: "",
+      meaningYor: "",
+      activeTab: "addWord",
+      formSubmitted: false
+    });
+  };
+
+  /**
+   * @method openEditWordForm
+   * @description The function that loads the edit word form with requested word
+   * @param {string} id - id of word
+   * @returns {undefined}
+   */
+  openEditWordForm = id => {
+    const { approvedWords } = this.state;
+    const {
+      marked,
+      pos,
+      example_eng,
+      example_yor,
+      meaning_eng,
+      meaning_yor
+    } = approvedWords.find(word => word.id === id);
+    this.setState({
+      marked,
+      pos,
+      exampleEng: example_eng,
+      exampleYor: example_yor,
+      meaningEng: meaning_eng,
+      meaningYor: meaning_yor,
+      activeTab: "editWord",
+      formSubmitted: false,
+      editWordId: id
     });
   };
 
@@ -134,6 +211,117 @@ class Dashboard extends Component {
   };
 
   /**
+   * @method addWord
+   * @description The function that handles word addition
+   * @returns {undefined}
+   */
+  addWord = async () => {
+    const {
+      marked,
+      pos,
+      exampleEng,
+      exampleYor,
+      meaningEng,
+      meaningYor
+    } = this.state;
+    // TODO attach user to approval
+    // TODO confirm submission without tonal marks
+    // const { user } = this.props;
+    this.setState({
+      addFormLoading: true
+    });
+    try {
+      await firestore()
+        .collection("words")
+        .add({
+          unmarked: marked.normalize("NFD").replace(/[\u0300-\u036f]/g, ""),
+          marked,
+          pos,
+          example_eng: exampleEng,
+          example_yor: exampleYor,
+          meaning_eng: meaningEng,
+          meaning_yor: meaningYor,
+          approved: true,
+          random: Number.parseFloat(Math.random())
+        });
+
+      this.setState({
+        addFormLoading: false,
+        formSubmitted: true,
+        marked: "",
+        pos: "",
+        exampleEng: "",
+        exampleYor: "",
+        meaningEng: "",
+        meaningYor: "",
+        error: ""
+      });
+    } catch (err) {
+      this.setState({
+        addFormLoading: false,
+        formSubmitted: false,
+        error: "Could not submit form"
+      });
+    }
+  };
+
+  /**
+   * @method editWord
+   * @description The function that handles word edit
+   * @returns {undefined}
+   */
+  editWord = async () => {
+    const {
+      marked,
+      pos,
+      exampleEng,
+      exampleYor,
+      meaningEng,
+      meaningYor,
+      editWordId
+    } = this.state;
+    // TODO attach user to approval
+    // TODO confirm submission without tonal marks
+    // const { user } = this.props;
+    this.setState({
+      editFormLoading: true
+    });
+    try {
+      await firestore()
+        .ref(`words/${editWordId}`)
+        .set(
+          {
+            unmarked: marked.normalize("NFD").replace(/[\u0300-\u036f]/g, ""),
+            marked,
+            pos,
+            example_eng: exampleEng,
+            example_yor: exampleYor,
+            meaning_eng: meaningEng,
+            meaning_yor: meaningYor,
+            random: Number.parseFloat(Math.random())
+          },
+          err => {
+            if (err) {
+              throw new Error(err);
+            }
+          }
+        );
+
+      this.setState({
+        editFormLoading: false,
+        formSubmitted: true,
+        error: ""
+      });
+    } catch (err) {
+      this.setState({
+        editFormLoading: false,
+        formSubmitted: false,
+        error: "Could not submit form"
+      });
+    }
+  };
+
+  /**
    * @method changeTab
    * @description The function that handles tab change
    * @param {string} tab - tab to change to
@@ -142,7 +330,14 @@ class Dashboard extends Component {
   changeTab = tab => {
     this.setState({
       activeTab: tab,
-      error: ""
+      error: "",
+      marked: "",
+      pos: "",
+      exampleEng: "",
+      exampleYor: "",
+      meaningEng: "",
+      meaningYor: "",
+      formSubmitted: false
     });
   };
 
@@ -156,10 +351,19 @@ class Dashboard extends Component {
       error,
       loading,
       pendingWords,
-      requestedWords
+      requestedWords,
+      pos,
+      exampleEng,
+      exampleYor,
+      meaningEng,
+      meaningYor,
+      formSubmitted,
+      addFormLoading,
+      approvedWords,
+      editFormLoading
     } = this.state;
     const { isLoggedIn } = this.props;
-    return !isLoggedIn ? (
+    return isLoggedIn ? (
       <Redirect to="/" />
     ) : (
       <Fragment>
@@ -177,65 +381,73 @@ class Dashboard extends Component {
                   Words Requested
                 </a>
               </li>
+              <li className={activeTab === "addWord" ? "active" : ""}>
+                <a href="#" onClick={() => this.changeTab("addWord")}>
+                  Add Word
+                </a>
+              </li>
+              <li className={activeTab === "approvedWords" ? "active" : ""}>
+                <a href="#" onClick={() => this.changeTab("approvedWords")}>
+                  Approved Words
+                </a>
+              </li>
             </ul>
           </aside>
           {activeTab === "approveEntries" && (
-            <section>
-              <h1 className="page-header">Words Pending Approval</h1>
-              {error && <Alert type="error" message={error} />}
-              <div className="dashboard-data">
-                {loading && <Loader />}
-                {!loading && (
-                  <Fragment>
-                    {pendingWords.length === 0 && (
-                      <p>There are currently no words pending approval</p>
-                    )}
-                    {pendingWords.map(
-                      ({
-                        example_eng,
-                        example_yor,
-                        meaning_eng,
-                        meaning_yor,
-                        ...word
-                      }) => (
-                        <WordItem
-                          key={`${word.marked}-${word.id}`}
-                          {...word}
-                          exampleEng={example_eng}
-                          exampleYor={example_yor}
-                          meaningEng={meaning_eng}
-                          meaningYor={meaning_yor}
-                          pronounceWord={pronounceWord}
-                          pendingApproval
-                          approveDefinition={() =>
-                            this.approveDefinition(word.id)
-                          }
-                        />
-                      )
-                    )}
-                  </Fragment>
-                )}
-              </div>
-            </section>
+            <DashboardApproveWordPage
+              error={error}
+              loading={loading}
+              pendingWords={pendingWords}
+              approveDefinition={this.approveDefinition}
+            />
           )}
           {activeTab === "wordsRequested" && (
-            <section>
-              <h1 className="page-header">Words Requested</h1>
-              {error && <Alert type="error" message={error} />}
-              <div className="dashboard-data">
-                {loading && <Loader />}
-                {!loading && (
-                  <Fragment>
-                    {pendingWords.length === 0 && (
-                      <p>There are currently no requested words</p>
-                    )}
-                    {requestedWords.map(({ marked, id }) => (
-                      <p key={id}>{marked}</p>
-                    ))}
-                  </Fragment>
-                )}
-              </div>
-            </section>
+            <DashboardWordsRequestedPage
+              error={error}
+              loading={loading}
+              requestedWords={requestedWords}
+              openForm={this.openRequestedWordForm}
+            />
+          )}
+          {activeTab === "addWord" && (
+            <DashboardAddWordPage
+              error={error}
+              loading={addFormLoading}
+              handleSubmit={this.addWord}
+              handleChange={this.handleChange}
+              pos={pos}
+              exampleEng={exampleEng}
+              exampleYor={exampleYor}
+              meaningEng={meaningEng}
+              meaningYor={meaningYor}
+              formSubmitted={formSubmitted}
+              // eslint-disable-next-line react/destructuring-assignment
+              marked={this.state.marked}
+            />
+          )}
+          {activeTab === "editWord" && (
+            <DashboardEditWordPage
+              error={error}
+              loading={editFormLoading}
+              handleSubmit={this.editWord}
+              handleChange={this.handleChange}
+              pos={pos}
+              exampleEng={exampleEng}
+              exampleYor={exampleYor}
+              meaningEng={meaningEng}
+              meaningYor={meaningYor}
+              formSubmitted={formSubmitted}
+              // eslint-disable-next-line react/destructuring-assignment
+              marked={this.state.marked}
+            />
+          )}
+          {activeTab === "approvedWords" && (
+            <DashboardWordsListPage
+              error={error}
+              loading={loading}
+              approvedWords={approvedWords}
+              handleEdit={this.openEditWordForm}
+            />
           )}
         </main>
         <Footer />

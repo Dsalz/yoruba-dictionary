@@ -34,7 +34,22 @@ export const extractFirebaseDataFromArrayResponse = (
  * @returns {undefined}
  */
 export const pronounceWord = word => {
-  new Audio(
+  sessionStorage.removeItem("YDPronounceError");
+  if (sessionStorage.getItem("YDPronounceLoading")) {
+    return;
+  }
+  sessionStorage.setItem("YDPronounceLoading", "true");
+  const audioTrack = new Audio(
     `https://gentle-falls-68008.herokuapp.com/api/v1/names/${word}`
-  ).play();
+  );
+
+  audioTrack.play().catch(() => {
+    sessionStorage.removeItem("YDPronounceLoading");
+    sessionStorage.setItem("YDPronounceError", "true");
+  });
+
+  audioTrack.onended = () => {
+    sessionStorage.removeItem("YDPronounceLoading");
+    sessionStorage.setItem("YDPronounceError", "true");
+  };
 };

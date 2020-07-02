@@ -5,10 +5,11 @@
 .dashboard aside {
   width: 200px;
   position: fixed;
-  top: 80px;
+  top: 72px;
+  padding-top: 10px;
   left: 0;
   height: calc(100vh - 80px);
-  background: #fff;
+  background: #0066f540;
 }
 
 .dashboard  section {
@@ -41,4 +42,16 @@
   color: #fff;
   background: #0066f5;
   cursor: pointer;
+}
+
+.dashboard .add-words-section form {
+  margin-top: 0;
+}
+
+.dashboard .word-item {
+  margin-bottom: 40px;
+}
+
+.dashboard .word-item h2{
+  margin-top: 0;
 }
