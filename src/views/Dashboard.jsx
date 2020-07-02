@@ -363,7 +363,7 @@ class Dashboard extends Component {
       editFormLoading
     } = this.state;
     const { isLoggedIn } = this.props;
-    return isLoggedIn ? (
+    return !isLoggedIn ? (
       <Redirect to="/" />
     ) : (
       <Fragment>
