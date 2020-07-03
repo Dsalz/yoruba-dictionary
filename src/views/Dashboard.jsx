@@ -262,7 +262,7 @@ class Dashboard extends Component {
       this.setState({
         addFormLoading: false,
         formSubmitted: false,
-        error: "Could not submit form"
+        error: "Could not add word"
       });
     }
   };
@@ -320,7 +320,7 @@ class Dashboard extends Component {
       this.setState({
         editFormLoading: false,
         formSubmitted: false,
-        error: "Could not submit form"
+        error: err?.message || "Could not edit word"
       });
     }
   };
