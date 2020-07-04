@@ -75,7 +75,9 @@ class AddPage extends Component {
           meaning_eng,
           meaning_yor,
           approved: false,
-          random: Number.parseFloat(Math.random())
+          random: Number.parseFloat(Math.random()),
+          created_at:firestore.FieldValue.serverTimestamp(), 
+          updated_at: firestore.FieldValue.serverTimestamp()
         });
 
       this.setState({
