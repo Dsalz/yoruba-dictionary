@@ -72,6 +72,7 @@ class Dashboard extends Component {
       firestore()
         .collection("words")
         .where("approved", "==", false)
+        .limit(10)
         .get()
     ]);
 
@@ -88,6 +89,7 @@ class Dashboard extends Component {
       firestore()
         .collection("words")
         .where("approved", "==", true)
+        .limit(10)
         .get()
     ]);
 
@@ -286,24 +288,18 @@ class Dashboard extends Component {
     });
     try {
       await firestore()
-        .ref(`words/${editWordId}`)
-        .set(
-          {
-            unmarked: marked.normalize("NFD").replace(/[\u0300-\u036f]/g, ""),
-            marked,
-            pos,
-            example_eng: exampleEng,
-            example_yor: exampleYor,
-            meaning_eng: meaningEng,
-            meaning_yor: meaningYor,
-            random: Number.parseFloat(Math.random())
-          },
-          err => {
-            if (err) {
-              throw new Error(err);
-            }
-          }
-        );
+        .collection("words")
+        .doc(editWordId)
+        .update({
+          unmarked: marked.normalize("NFD").replace(/[\u0300-\u036f]/g, ""),
+          marked,
+          pos,
+          example_eng: exampleEng,
+          example_yor: exampleYor,
+          meaning_eng: meaningEng,
+          meaning_yor: meaningYor,
+          random: Number.parseFloat(Math.random())
+        });
 
       this.setState({
         editFormLoading: false,
