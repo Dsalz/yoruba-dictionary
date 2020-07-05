@@ -186,17 +186,11 @@ class Dashboard extends Component {
     });
     try {
       await firestore()
-        .ref(`words/${id}`)
-        .set(
-          {
-            approved: true
-          },
-          err => {
-            if (err) {
-              throw new Error(err);
-            }
-          }
-        );
+        .collection("words")
+        .doc(id)
+        .update({
+          approved: true
+        });
 
       this.setState({
         loading: false,
