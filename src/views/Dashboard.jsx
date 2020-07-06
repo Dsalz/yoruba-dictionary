@@ -103,6 +103,7 @@ class Dashboard extends Component {
     const response = await Promise.all([
       firestore()
         .collection("requests")
+        .limit(10)
         .get()
     ]);
 
