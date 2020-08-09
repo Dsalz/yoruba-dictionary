@@ -68,10 +68,13 @@ class Dashboard extends Component {
    * @returns {undefined}
    */
   getWordsPendingApproval = async () => {
+    const randomNo = Number.parseFloat(Math.random());
     const response = await Promise.all([
       firestore()
         .collection("words")
         .where("approved", "==", false)
+        .orderBy("random")
+        .startAt(randomNo)
         .limit(10)
         .get()
     ]);
