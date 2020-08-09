@@ -75,7 +75,7 @@ class Dashboard extends Component {
         .where("approved", "==", false)
         .orderBy("random")
         .startAt(randomNo)
-        .limit(10)
+        .limit(5)
         .get()
     ]);
 
