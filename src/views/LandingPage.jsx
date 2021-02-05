@@ -209,7 +209,7 @@ class LandingPage extends Component {
               {!loading && answers.length === 0 && (
                 <p>
                   {`We didn't find ${query} but we are doing all we can to get and publish the meaning of ${query}. Please consider `}
-                  <Link to="/request" className="contribute-link">
+                  <Link to="/add" className="contribute-link">
                     contributing
                   </Link>
                   {" the meaning if you know it"}
