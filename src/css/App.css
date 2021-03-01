@@ -20,6 +20,10 @@ main {
   align-items: center;
 }
 
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
 .coming-soon-section {
   padding: 200px 0;
   text-align: center;
@@ -41,8 +45,12 @@ main {
   background: transparent;
 }
 
-.underlinedInput:focus {
+.underlined-input:focus {
   border-color:#0066f5;
+}
+
+.underlined-input:disabled {
+  background: #e3e3e3;
 }
 
 .blue-btn {
@@ -94,7 +102,7 @@ main {
   text-align: left;
 }
 
-.word-item span{
+.word-item span.word-pos{
   background: #0066f5;
   color: #fff;
   font-size: 12px;
@@ -105,10 +113,14 @@ main {
 
 .word-item div p{
   margin: 10px 0;
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .word-item div p,
-.word-item span{
+.word-item span.word-pos{
   text-transform: capitalize;
 }
 
@@ -117,23 +129,30 @@ main {
 }
 
 .word-item button.pronounce-btn {
+  margin-left: 5px;
+}
+
+button.icon-btn {
   background: transparent;
   padding: 0;
   border: none;
   cursor: pointer;
   outline: none;
-  margin-left: 5px;
 }
 
 .word-item div.pronounciation-div {
   margin: 10px 0 20px;
 }
 
-.word-item button.pronounce-btn i {
+button.icon-btn i {
   font-size: 24px;
 }
 
-.word-item button.pronounce-btn:hover i {
+button.icon-btn i.small {
+  font-size: 16px;
+}
+
+button.icon-btn:hover i {
   color: #0066f5
 }
 
@@ -202,4 +221,108 @@ main {
 
 .socials-wrapper button:last-of-type {
   background: #0077b5;
+}
+
+.form-input-text {
+  position: absolute;
+  font-size: 12px;
+  left: 0;
+  top: 100%;
+}
+
+.error-text {
+  color: red;
+}
+
+.success-text {
+  color: #68bd68;
+}
+
+.suggestion-form {
+  position: relative;
+  display: inline-flex;
+}
+
+.suggestion-form input,
+.suggestion-form button,
+.suggestion-form {
+  max-height: 32px;
+  font-size: 12px;
+}
+
+.suggestion-form input {
+  padding: 6px 2px;
+  font-size: 16px;
+}
+
+.suggestion-form-input-wrapper {
+  position: relative;
+}
+
+.suggestion-form-input-wrapper .form-input-text {
+  font-size: 14px;
+}
+
+.site-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.suggestion-wrapper {
+  display: inline;
+  margin-left: 5px;
+}
+
+.suggestion-wrapper button.close-btn,
+  .suggestion-wrapper button.submit-btn {
+  margin-left: 16px;
+}
+
+button.icon-btn.close-btn:hover i {
+  color: red;
+}
+
+
+@media screen and (max-width: 500px) {
+  .suggestion-form,
+  .word-item div p {
+    display: flex;
+  }
+
+  .word-item div p {
+    flex-wrap: wrap;
+  }
+
+  .suggestion-form {
+    margin-top: 4px;
+    margin-left: -5px;
+    margin-bottom: 50px;
+    flex-wrap: wrap;
+    height: auto;
+    justify-content: space-between;
+    width: calc(90vw - 40px);
+  }
+
+  .suggestion-form-input-wrapper {
+    margin-bottom: 20px;
+  }
+
+  .suggestion-form-input-wrapper,
+  .suggestion-form input {
+    width: 100%;
+  }
+
+  .suggestion-wrapper button.submit-btn {
+    margin-left: 0;
+  }
+
+  .suggestion-form-input-wrapper .form-input-text {
+    top: 100%;
+    font-size: 8px;
+  }
+
+  .suggestion-wrapper .alert {
+    margin-left: -5px;
+  }
 }

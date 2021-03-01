@@ -1,9 +1,10 @@
+/* eslint-disable react/prop-types */
 import React from "react";
 
-const Loader = () => (
+const Loader = ({ stroke = "#0066f5", width = "50px", height = "50px" }) => (
   <svg
-    width="50px"
-    height="50px"
+    width={width}
+    height={height}
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 100 100"
     preserveAspectRatio="xMidYMid"
@@ -17,7 +18,7 @@ const Loader = () => (
       ng-attr-stroke-width="{{config.width}}"
       ng-attr-r="{{config.radius}}"
       ng-attr-stroke-dasharray="{{config.dasharray}}"
-      stroke="#0066f5"
+      stroke={stroke}
       strokeWidth="6"
       r="35"
       strokeDasharray="164.93361431346415 56.97787143782138"

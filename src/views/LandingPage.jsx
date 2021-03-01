@@ -87,8 +87,6 @@ class LandingPage extends Component {
           .limit(1)
           .get()
       ]);
-      console.log(randomNo);
-      console.log(response);
     } else {
       query = stateQuery.toLowerCase().trim();
       response = await Promise.all([

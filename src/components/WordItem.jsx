@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { Fragment } from "react";
+import Suggestion from "./Suggestion";
 
 const getShareData = (url, word) => {
   return `Checkout this word ${word} at ${url}`;
@@ -17,17 +18,18 @@ const WordItem = ({
   pronounceWord,
   forEdit,
   handleEdit,
-  editText
+  editText,
+  id
 }) => (
   <article className="word-item">
     <h2 className="d-flex align-items-center">
       {marked || unmarked}
-      {pos && <span>{pos}</span>}
+      {pos && <span className="word-pos">{pos}</span>}
     </h2>
     <div className="pronounciation-div d-flex align-items-center">
       Pronunciation:
       <button
-        className="pronounce-btn"
+        className="pronounce-btn icon-btn"
         type="button"
         onClick={() => pronounceWord(marked)}
       >
@@ -35,41 +37,33 @@ const WordItem = ({
       </button>
     </div>
     <div className="answer-section">
-      {meaning && !meaningEng && (
-        <p>
-          <b>Meaning:</b> {meaning}
-        </p>
-      )}
-      {meaningEng && (
-        <p>
-          <Fragment>
-            <b>Meaning:</b> {meaningEng}
-          </Fragment>
-        </p>
-      )}
-      {meaningYor && meaningEng && (
-        <p>
-          <Fragment>
-            <b>Ìtumọ̀:</b> {meaningYor}
-          </Fragment>
-        </p>
-      )}
+      <p>
+        <b>Meaning:</b>
+        {meaningEng || meaning}
+        {!meaning && !meaningEng && (
+          <Suggestion wordId={id} field="meaning_eng" />
+        )}
+      </p>
+      <p>
+        <Fragment>
+          <b>{meaningYor ? "Ìtumọ̀" : "Yoruba Meaning"}:</b> {meaningYor}
+          {!meaningYor && <Suggestion wordId={id} field="meaning_yor" />}
+        </Fragment>
+      </p>
     </div>
     <div className="answer-section">
-      {exampleEng && (
-        <p>
-          <Fragment>
-            <b>Example:</b> {exampleEng}
-          </Fragment>
-        </p>
-      )}
-      {exampleYor && exampleEng && (
-        <p>
-          <Fragment>
-            <b>Àpẹrẹ:</b> {exampleYor}
-          </Fragment>
-        </p>
-      )}
+      <p>
+        <Fragment>
+          <b>Example:</b> {exampleEng}
+          {!exampleEng && <Suggestion wordId={id} field="example_eng" />}
+        </Fragment>
+      </p>
+      <p>
+        <Fragment>
+          <b>{exampleYor ? "Àpẹrẹ" : "Yoruba Example"}:</b> {exampleYor}
+          {!exampleYor && <Suggestion wordId={id} field="example_yor" />}
+        </Fragment>
+      </p>
     </div>
     {!forEdit && (
       <div className="answer-section">
