@@ -90,7 +90,7 @@ class LandingPage extends Component {
       ]);
     } else {
       query = stateQuery.toLowerCase().trim();
-      if(hasDiacritics(query)){
+      if (hasDiacritics(query)) {
         response = await Promise.all([
           firestore()
             .collection("words")
