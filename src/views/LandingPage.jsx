@@ -109,7 +109,7 @@ class LandingPage extends Component {
       }
     }
 
-    const answers = extractFirebaseDataFromArrayResponse(response, true);
+    const answers = extractFirebaseDataFromArrayResponse(response, false);
 
     if (answers.length === 0) {
       firestore()
