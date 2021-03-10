@@ -16,7 +16,8 @@ import "../css/LandingPage.css";
 // Utils
 import {
   extractFirebaseDataFromArrayResponse,
-  pronounceWord
+  pronounceWord,
+  hasDiacritics
 } from "../../utils";
 
 /**
@@ -89,20 +90,24 @@ class LandingPage extends Component {
       ]);
     } else {
       query = stateQuery.toLowerCase().trim();
-      response = await Promise.all([
-        firestore()
-          .collection("words")
-          .where("unmarked", "==", query)
-          .where("approved", "==", true)
-          .get(),
-        firestore()
-          .collection("words")
-          .where("marked", "==", query)
-          .where("approved", "==", true)
-          .get()
-      ]);
+      if(hasDiacritics(query)){
+        response = await Promise.all([
+          firestore()
+            .collection("words")
+            .where("marked", "==", query)
+            .where("approved", "==", true)
+            .get()
+        ]);
+      } else {
+        response = await Promise.all([
+          firestore()
+            .collection("words")
+            .where("unmarked", "==", query)
+            .where("approved", "==", true)
+            .get()
+        ]);
+      }
     }
-
     const answers = extractFirebaseDataFromArrayResponse(response, true);
 
     if (answers.length === 0) {
