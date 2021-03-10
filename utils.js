@@ -58,9 +58,9 @@ export const pronounceWord = word => {
  * @method hasDiacritics
  * @description The ffunction returns whether or not a string has diacritics
  * @param {object} word - word
- * @returns {Boolean}
+ * @returns {undefined}
  */
 export const hasDiacritics = word => {
-  var regex = /^[A-Za-z0-9 ]+$/
+  const regex = /^[A-Za-z0-9 ]+$/;
   return !regex.test(word);
 };
