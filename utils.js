@@ -53,3 +53,14 @@ export const pronounceWord = word => {
     sessionStorage.setItem("YDPronounceError", "true");
   };
 };
+
+/**
+ * @method hasDiacritics
+ * @description The ffunction returns whether or not a string has diacritics
+ * @param {object} word - word
+ * @returns {Boolean}
+ */
+export const hasDiacritics = word => {
+  var regex = /^[A-Za-z0-9 ]+$/
+  return !regex.test(word);
+};
