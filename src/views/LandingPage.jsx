@@ -108,6 +108,7 @@ class LandingPage extends Component {
         ]);
       }
     }
+
     const answers = extractFirebaseDataFromArrayResponse(response, true);
 
     if (answers.length === 0) {
