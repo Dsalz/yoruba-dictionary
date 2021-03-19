@@ -62,7 +62,7 @@ const WordItem = ({
         <Fragment>
           <b>{exampleYor ? "Àpẹrẹ" : "Yoruba Example"}:</b> {exampleYor}
           <button
-            className="pronounce-btn"
+            className="pronounce-btn icon-btn"
             type="button"
             onClick={() => pronounceWord(exampleYor)}
           >
